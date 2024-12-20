@@ -32,7 +32,7 @@ export default function Home() {
       {location && (
         <div>
           <h4>City: {location.city}</h4>
-          <h4>Coordinates: {location.Latitude}, {location.Longitude}</h4>
+          <h4>Coordinates: {location.latitude}, {location.longitude}</h4>
         </div>
       )}
     </div>
