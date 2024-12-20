@@ -15,7 +15,7 @@ export default function Home() {
       setIP(userIP);
 
       // Then get the location data using the IP
-      const locationResponse = await axios.get(`http://ip-api.com/json/${userIP}`);
+      const locationResponse = await axios.get(`https://ipapi.co/${userIP}/json/`);
       setLocation(locationResponse.data);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -32,7 +32,7 @@ export default function Home() {
       {location && (
         <div>
           <h4>City: {location.city}</h4>
-          <h4>Coordinates: {location.lat}, {location.lon}</h4>
+          <h4>Coordinates: {location.Latitude}, {location.Longitude}</h4>
         </div>
       )}
     </div>
