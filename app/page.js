@@ -5,31 +5,36 @@ import axios from "axios";
 
 export default function Home() {
   const [ip, setIP] = useState("");
-
-  //creating function to load ip address from the API
-  // const getData = async () => {
-  //   const res = await axios.get("https://geolocation-db.com/json/");
-  //   console.log(res.data);
-  //   setIP(res.data.IPv4);
-  // };
-
-  // Updated Code
+  const [location, setLocation] = useState(null);
 
   const getData = async () => {
-    const res = await axios.get("https://api.ipify.org/?format=json");
-    console.log(res.data);
-    setIP(res.data.ip);
+    try {
+      // First get the IP address
+      const ipResponse = await axios.get("https://api.ipify.org/?format=json");
+      const userIP = ipResponse.data.ip;
+      setIP(userIP);
+
+      // Then get the location data using the IP
+      const locationResponse = await axios.get(`http://ip-api.com/json/${userIP}`);
+      setLocation(locationResponse.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   };
 
   useEffect(() => {
-    //passing getData method to the lifecycle method
     getData();
   }, []);
 
   return (
     <div className="App">
-      <h2>Your IP Address is</h2>
-      <h4>{ip}</h4>
+      <h2>Your Location Details</h2>
+      {location && (
+        <div>
+          <h4>City: {location.city}</h4>
+          <h4>Coordinates: {location.lat}, {location.lon}</h4>
+        </div>
+      )}
     </div>
   );
 }
